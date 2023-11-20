@@ -1,4 +1,4 @@
-module Code.NatNumbers where
+module Code.MyNat where
 
 open import Library.Equality
 -- Reasoning is for ...=...=... for dimostrations
@@ -8,7 +8,6 @@ open import Library.Equality.Reasoning
 data ℕ : Set where
   zero : ℕ
   succ : ℕ -> ℕ
-
 {-# BUILTIN NATURAL ℕ #-}
 
 tree-eq : succ(succ(succ zero)) == 3
@@ -27,14 +26,15 @@ zero * y = zero
 succ x * y = y + x * y
 
 _^_ : ℕ -> ℕ -> ℕ
-x ^ zero = succ(zero)
+x ^ zero = succ zero
 x ^ succ y = x * x ^ y
 
---PROPRIETA'
 
+--PROPRIETA'
 +-ass : ∀ (x y z : ℕ) -> x + (y + z) == (x + y) + z
-+-ass zero y z = refl   --Rango è numero volte che compare a sinistra (vogliamo il maggiore)
-+-ass (succ x) y z = cong succ (+-ass x y z)  --cong (congruenza) ? ? C-c C-l
++-ass zero y z = refl --Rango è n volte che compare a sinistra (voglio >)
++-ass (succ x) y z = cong succ (+-ass x y z)
+            --cong (congr.) ? ? C-c C-space
 
 +-ass2 : ∀ (x y z : ℕ) -> x + (y + z) == (x + y) + z
 +-ass2 zero y z = refl
@@ -80,4 +80,30 @@ plus-minus-l : ∀(x y : ℕ) -> (x + y) - x == y
 plus-minus-l zero y = refl
 plus-minus-l (succ x) y = plus-minus-l x y
 
---plus-minus-r : ∀(x y : ℕ) -> (x + y) - y == x
+fact : ℕ -> ℕ
+fact zero = succ zero
+fact (succ n) = succ(n) * (fact n)
+
+*-unit-r : ∀(x : ℕ) -> x == x * (succ zero)
+*-unit-r zero = refl
+*-unit-r (succ x) = cong succ (*-unit-r x)
+
+*-unit-l : ∀(x : ℕ) -> x == (succ zero) * x
+*-unit-l zero = refl
+*-unit-l (succ x) = cong succ (*-unit-l x)
+
+*-null-r : ∀(x : ℕ) -> zero == x * zero
+*-null-r zero = refl
+*-null-r (succ x) = *-null-r x
+
+{-
+*-comm : ∀ (x y : ℕ) -> x * y == y * x
+*-comm zero y = *-null-r y
+*-comm (succ x) y =
+  begin
+    {!!}
+
+^-sum-exp : ∀(x m n : ℕ) -> x ^ m * x ^ n == x ^ (m + n)
+^-sum-exp x zero n = {!!}
+^-sum-exp x (succ m) n = {!!}
+-}
