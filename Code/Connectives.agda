@@ -182,13 +182,16 @@ demorgan-∧r naob = (λ {a -> naob (inl a)}) , λ {b -> naob (inr b)}
 
 -}
 
---nndec : ∀{A : Set} -> ¬ ¬ Decidable A
---nndec nda = {!!} 
+nndec : ∀{A : Set} -> ¬ ¬ Decidable A
+nndec nda with demorgan-∧r nda
+... | (nna , na) = nna na 
 
 
---em-dn : (∀{A : Set} -> ¬ A ∨ A) -> ∀{A : Set} -> ¬ ¬ A -> A
---em-dn t {A} p = {!!}
+em-dn : (∀{A : Set} -> ¬ A ∨ A) -> ∀{A : Set} -> ¬ ¬ A -> A
+em-dn f {A} g with f {A} 
+... | no nok = ex-falso (g nok)
+... | yes ok = ok
 
---dn-em : (∀{A : Set} -> (¬ ¬ A -> A)) -> ∀{A : Set} -> Decidable A
---dn-em t = {!!}
+dn-em : (∀{A : Set} -> (¬ ¬ A -> A)) -> ∀{A : Set} -> Decidable A
+dn-em  t {A} = t nndec
 
