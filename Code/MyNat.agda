@@ -96,13 +96,18 @@ fact (succ n) = succ(n) * (fact n)
 *-null-r zero = refl
 *-null-r (succ x) = *-null-r x
 
-{-
+--*-succ : ∀(x y : ℕ) -> succ x * y == x + succ y
+--*-succ zero     y = refl
+--*-succ (succ x) y = cong succ (+-succ x y)
+
+
 *-comm : ∀ (x y : ℕ) -> x * y == y * x
 *-comm zero y = *-null-r y
 *-comm (succ x) y =
   begin
     {!!}
 
+{-
 ^-sum-exp : ∀(x m n : ℕ) -> x ^ m * x ^ n == x ^ (m + n)
 ^-sum-exp x zero n = {!!}
 ^-sum-exp x (succ m) n = {!!}
