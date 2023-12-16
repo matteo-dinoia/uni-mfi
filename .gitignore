@@ -1,2 +1,7 @@
+# Temp and compiled files
 *~
 *.agdai
+\#*\#
+
+# File for saving emacs state
+.emacs.desktop
