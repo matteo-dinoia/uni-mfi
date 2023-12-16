@@ -99,14 +99,19 @@ Sorted'->Sorted (sorted-:: dis sort') = sorted-:: (lemma dis sort') (Sorted'->So
     lemma hlb-[] sort = lb-[]
     lemma (hlb-:: dis) (sorted-:: low sort) = lb-:: dis (lemma (lower dis low) sort)
 
-{-   
+
 #push : ∀{A : Set} (x : A) (xs ys : List A) -> x :: xs ++ ys # xs ++ x :: ys
-#push x xs ys = {!!}
+#push x [] ys = #refl
+#push x (x₁ :: xs) ys = #trans #swap (#cong (#push x xs ys))
+
 
 #++ : ∀{A : Set} (xs ys : List A) -> xs ++ ys # ys ++ xs
 #++ [] ys rewrite ++-unit-r ys = #refl
-#++ (x :: xs) ys = {!lemma x xs ys!}
-  where
-    lemma :  ∀{A : Set} (x : A) (xs ys : List A) -> x :: xs ++ ys # ys ++ x :: xs
-    lemma x xs ys = {!!}
--}
+#++ (x :: xs) ys = #trans #refl (#trans (#cong (#++ xs ys)) (#push x ys xs))
+
+#reverse : ∀{A : Set} (xs : List A) -> reverse xs # xs
+#reverse [] = #refl
+#reverse (x :: xs) = #trans (#++ (reverse xs) [ x ]) (#cong (#reverse xs))
+
+
+
