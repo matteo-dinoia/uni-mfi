@@ -2,6 +2,7 @@
 *~
 *.agdai
 \#*\#
+.\#*
 
 # File for saving emacs state
 .emacs.desktop
