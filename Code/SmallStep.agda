@@ -160,4 +160,9 @@ _ = refl
 
 
 exec0 : ⦅ com0 , st07 ⦆ ⟶* ⦅ SKIP , st10 ⦆
-exec0 = {!!}
+exec0 = ⦅ (Z := V X) :: ((X := V Y) :: (Y := V Z)) , st07 ⦆⟶⟨ Comp₂ Loc  ⟩
+        (⦅ SKIP :: ((X := V Y) :: (Y := V Z)) , st08 ⦆⟶⟨ Comp₁ ⟩
+        (⦅ (X := V Y) :: (Y := V Z) , st08 ⦆⟶⟨ Comp₂ Loc ⟩
+        (⦅ SKIP :: (Y := V Z) , st09 ⦆⟶⟨ Comp₁ ⟩
+        (⦅ Y := V Z , st09 ⦆⟶⟨ Loc ⟩
+        ⦅ SKIP , st10 ⦆∎)))) 
