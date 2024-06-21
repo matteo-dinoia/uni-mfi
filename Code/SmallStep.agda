@@ -97,9 +97,8 @@ lemma-big-small ⟶*-refl = ⟶*-refl
 lemma-big-small (⟶*-incl x hyp) = ⟶*-incl (Comp₂ x) (lemma-big-small hyp)
 
 theorem-big-small : ∀ {c s t} -> ⦅ c , s ⦆ ⇒ t -> ⦅ c , s ⦆ ⟶* ⦅ SKIP , t ⦆
-theorem-big-small (Skip {s}) = ⦅ SKIP , s ⦆∎
-theorem-big-small (Loc {x} {a} {s}) =
-           ⦅ x := a , s ⦆⟶⟨ Loc ⟩ ⦅ SKIP , s [ x ::= aval a s ] ⦆∎
+theorem-big-small Skip =  ⟶*-refl
+theorem-big-small Loc =  ⟶*-incl Loc ⟶*-refl
 theorem-big-small (Comp {c1} {c2} {s1} {s2} {s3} hyp1 hyp2) =
            ⦅ c1 :: c2 , s1 ⦆⟶*⟨ lemma-big-small (theorem-big-small hyp1) ⟩
            (⦅ SKIP :: c2 , s2 ⦆⟶⟨ Comp₁ ⟩
